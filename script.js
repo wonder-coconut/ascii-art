@@ -12,6 +12,7 @@ function sliderHandler()
     else
     {
         sliderLabel.innerHTML = 'Resolution: ' + inputSlider.value + ' px';
+        ctx.font = parseInt(inputSlider.value) * 1.25 + 'px verdana';
         asciiObj.drawAscii(parseInt(inputSlider.value));
     }
 }
