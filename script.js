@@ -4,11 +4,15 @@ const inputSlider = document.getElementById('resolution');
 const sliderLabel = document.getElementById('resolutionLabel');
 const imageUpload = document.getElementById('imageUpload');
 const uploadLabel = document.getElementById('uploadLabel');
+const monoButton = document.getElementById('monoButton');
 
 const image = new Image();
 
+let mono = false;
+
 imageUpload.addEventListener('change', (event) => 
 {
+    console.log('imageUpload');
     const fileList = event.target.files;
     const reader = new FileReader();
     reader.addEventListener('load', () =>
@@ -18,13 +22,20 @@ imageUpload.addEventListener('change', (event) =>
     reader.readAsDataURL(fileList[0]);
 });
 
+monoButton.addEventListener('click', () =>
+{
+    mono = !mono;
+    console.log('monochrome: ' + mono);
+    sliderHandler();
+});
 inputSlider.oninput = sliderHandler;
 
 function sliderHandler()
 {
+    console.log('sliderHandler');
     sliderLabel.innerHTML = 'Resolution: ' + inputSlider.value + ' px';
     ctx.font = parseInt(inputSlider.value) * 1.5 + 'px verdana';
-    asciiObj.drawAscii(parseInt(inputSlider.value));
+    asciiObj.drawAscii(parseInt(inputSlider.value),mono);
 }
 
 class Cell
@@ -39,6 +50,7 @@ class Cell
     
     drawCell(ctx)
     {
+        console.log('Cell.drawCell');
         ctx.fillStyle = this.colour;
         ctx.fillText(this.symbol, this.x, this.y);
     }
@@ -64,11 +76,13 @@ class AsciiArt
 
     #colourToSymbol(colAvg)
     {
+        console.log('AsciiArt.colourToSymbol');
         return this.#symbols[this.#symbols.length - (Math.round(colAvg/255 * (this.#symbols.length - 1))) - 1]
     }
 
-    #formatImage(cellSize)
+    #formatImage(cellSize,monochrome)
     {
+        console.log('AsciiArt.formatImage');
         this.#imageCellArray = [];
 
         let pixel,red,green,blue,colour,colAvg,symbol;
@@ -84,9 +98,12 @@ class AsciiArt
                     red = this.#pixels.data[pixel];
                     green = this.#pixels.data[pixel + 1];
                     blue = this.#pixels.data[pixel + 2];
-
-                    colour = 'rgb('+red+','+green+','+blue+')';
                     colAvg = (red + green + blue)/3;
+
+                    if(monochrome)
+                        colour = 'rgb('+colAvg+','+colAvg+','+colAvg+')';
+                    else
+                        colour = 'rgb('+red+','+green+','+blue+')';
 
                     symbol = this.#colourToSymbol(colAvg);
                 }
@@ -97,9 +114,10 @@ class AsciiArt
         }
     }
 
-    drawAscii(cellSize)
+    drawAscii(cellSize,monochrome)
     {
-        this.#formatImage(cellSize);
+        console.log('AsciiArt.drawAscii');
+        this.#formatImage(cellSize,monochrome);
         this.#ctx.clearRect(0, 0, this.#width, this.#height);
         for(let i = 0; i < this.#imageCellArray.length; i++)
             this.#imageCellArray[i].drawCell(this.#ctx);
@@ -112,6 +130,7 @@ image.onload = initialize;
 
 function initialize()
 {
+    console.log('initialize');
     canvas.width = image.width;
     canvas.height = image.height;
     ctx.drawImage(image, 0, 0);

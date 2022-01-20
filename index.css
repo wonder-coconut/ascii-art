@@ -46,3 +46,16 @@ body
     width: 75%;
     padding: 1px 2px 1px 2px;
 }
+
+/*.render
+{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#renderButton
+{
+    padding: 5px 8px 5px 8px;
+    font-size: 20px;
+}*/
