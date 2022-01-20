@@ -3,6 +3,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto Mono', Arial, Helvetica, sans-serif;
 }
 body
 {
@@ -17,24 +18,20 @@ body
     transform: translate(-50%,-50%);
 }
 
-#canvas
-{
-    border: 5px solid white;
-}
-
 .controls
 {
     display: flex;
+    justify-content: center;
+    color: white;
+    padding: 3px;
 }
 
-.control > input
-{
-    width: 70%;
-}
-
-.controls > label
+.slider
 {
     width: 25%;
-    color: white;
-    font-size: 15px;
+}
+
+.upload
+{
+    width: 25%;
 }
