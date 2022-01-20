@@ -22,14 +22,9 @@ inputSlider.oninput = sliderHandler;
 
 function sliderHandler()
 {
-    if(inputSlider.value == 1)
-        sliderLabel.innerHTML = 'Original Image';
-    else
-    {
-        sliderLabel.innerHTML = 'Resolution: ' + inputSlider.value + ' px';
-        ctx.font = parseInt(inputSlider.value) * 1.5 + 'px verdana';
-        asciiObj.drawAscii(parseInt(inputSlider.value));
-    }
+    sliderLabel.innerHTML = 'Resolution: ' + inputSlider.value + ' px';
+    ctx.font = parseInt(inputSlider.value) * 1.5 + 'px verdana';
+    asciiObj.drawAscii(parseInt(inputSlider.value));
 }
 
 class Cell
